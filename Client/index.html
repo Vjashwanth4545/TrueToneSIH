@@ -676,94 +676,637 @@
       </div>
     </div>
   </section>
-
   <script>
+    // ==========================================
+    // API URL
+    // ==========================================
+  
+    const API_URL = "http://127.0.0.1:8000/predict";
+  
+  
+    // ==========================================
+    // ELEMENTS
+    // ==========================================
+  
     const analyzeBtn = document.getElementById('analyzeBtn');
     const reportSection = document.getElementById('reportSection');
     const audioInput = document.getElementById('audioInput');
     const dropText = document.getElementById('dropText');
+    const dropArea = document.getElementById('dropArea');
     const sampleBtns = document.querySelectorAll('.sample-btn');
-
+  
     let currentAudio = null;
     let activeBtn = null;
-
-    // Reset button icons & styles
+  
+    // Stores the actual file that will be sent to backend
+    let selectedFile = null;
+  
+  
+    // ==========================================
+    // RESET SAMPLE BUTTONS
+    // ==========================================
+  
     function resetSampleButtons() {
+  
       sampleBtns.forEach(btn => {
+  
         btn.classList.remove('active');
+  
         const icon = btn.querySelector('i');
+  
         icon.className = 'fa-solid fa-volume-high';
+  
       });
+  
     }
-
-    // Handle Sample Button Audio Playback
+  
+  
+    // ==========================================
+    // SELECT SAMPLE AUDIO
+    // ==========================================
+  
     sampleBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+  
+      btn.addEventListener('click', async (e) => {
+  
         e.stopPropagation();
+  
         const audioSrc = btn.getAttribute('data-src');
-        const label = btn.querySelector('.btn-text').innerText;
-
-        // If the same sample is playing, toggle pause
-        if (currentAudio && activeBtn === btn && !currentAudio.paused) {
+  
+        const label =
+          btn.querySelector('.btn-text').innerText;
+  
+  
+        // --------------------------------------
+        // PLAY / PAUSE SAME AUDIO
+        // --------------------------------------
+  
+        if (
+          currentAudio &&
+          activeBtn === btn &&
+          !currentAudio.paused
+        ) {
+  
           currentAudio.pause();
-          btn.querySelector('i').className = 'fa-solid fa-volume-high';
+  
+          btn.querySelector('i').className =
+            'fa-solid fa-volume-high';
+  
           btn.classList.remove('active');
+  
           return;
+  
         }
-
-        // Stop any currently playing audio
+  
+  
+        // --------------------------------------
+        // STOP PREVIOUS AUDIO
+        // --------------------------------------
+  
         if (currentAudio) {
+  
           currentAudio.pause();
+  
           currentAudio.currentTime = 0;
+  
         }
-
+  
+  
         resetSampleButtons();
-
-        // Create and play selected sample
+  
+  
+        // --------------------------------------
+        // PLAY SELECTED SAMPLE
+        // --------------------------------------
+  
         currentAudio = new Audio(audioSrc);
+  
         activeBtn = btn;
+  
         btn.classList.add('active');
-        btn.querySelector('i').className = 'fa-solid fa-circle-pause';
-
+  
+        btn.querySelector('i').className =
+          'fa-solid fa-circle-pause';
+  
+  
         currentAudio.play().catch(err => {
-          console.warn("Could not play audio. Ensure the file path is correct in data-src:", err);
+  
+          console.warn(
+            "Could not play audio:",
+            err
+          );
+  
         });
-
-        // When track ends, reset button state
+  
+  
         currentAudio.onended = () => {
-          btn.querySelector('i').className = 'fa-solid fa-volume-high';
+  
+          btn.querySelector('i').className =
+            'fa-solid fa-volume-high';
+  
           btn.classList.remove('active');
+  
         };
-
-        // Select sample for analysis
-        dropText.innerHTML = `Selected Sample: <strong>${label}</strong> (${audioSrc})`;
-      });
-    });
-
-    // Handle manual file selection from input
-    audioInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        if (currentAudio) {
-          currentAudio.pause();
+  
+  
+        // --------------------------------------
+        // GET SAMPLE AS FILE FOR API
+        // --------------------------------------
+  
+        try {
+  
+          const response = await fetch(audioSrc);
+  
+          const blob = await response.blob();
+  
+          const filename =
+            audioSrc.split('/').pop();
+  
+          selectedFile = new File(
+            [blob],
+            filename,
+            {
+              type: blob.type || "audio/wav"
+            }
+          );
+  
+  
+          dropText.innerHTML = `
+            Selected Sample:
+            <strong>${label}</strong>
+          `;
+  
+  
+        } catch (error) {
+  
+          console.error(
+            "Error loading sample:",
+            error
+          );
+  
+          alert(
+            "Could not load the sample audio file."
+          );
+  
         }
+  
+      });
+  
+    });
+  
+  
+    // ==========================================
+    // MANUAL FILE SELECTION
+    // ==========================================
+  
+    audioInput.addEventListener('change', (e) => {
+  
+      if (e.target.files.length > 0) {
+  
+        // Stop sample audio
+        if (currentAudio) {
+  
+          currentAudio.pause();
+  
+          currentAudio.currentTime = 0;
+  
+        }
+  
+  
         resetSampleButtons();
-        dropText.innerHTML = `Selected File: <strong>${e.target.files[0].name}</strong>`;
+  
+  
+        // Store selected file
+        selectedFile =
+          e.target.files[0];
+  
+  
+        dropText.innerHTML = `
+          Selected File:
+          <strong>${selectedFile.name}</strong>
+        `;
+  
       }
+  
     });
-
-    // Reveal report and scroll down on Analyze click
-    analyzeBtn.addEventListener('click', () => {
-      analyzeBtn.innerText = 'Analyzing...';
+  
+  
+    // ==========================================
+    // DRAG AND DROP
+    // ==========================================
+  
+    dropArea.addEventListener('dragover', (e) => {
+  
+      e.preventDefault();
+  
+      dropArea.style.borderColor = "#ffffff";
+  
+      dropArea.style.backgroundColor =
+        "rgba(255,255,255,0.35)";
+  
+    });
+  
+  
+    dropArea.addEventListener('dragleave', () => {
+  
+      dropArea.style.borderColor =
+        "rgba(255,255,255,0.5)";
+  
+      dropArea.style.backgroundColor =
+        "rgba(255,255,255,0.2)";
+  
+    });
+  
+  
+    dropArea.addEventListener('drop', (e) => {
+  
+      e.preventDefault();
+  
+  
+      dropArea.style.borderColor =
+        "rgba(255,255,255,0.5)";
+  
+      dropArea.style.backgroundColor =
+        "rgba(255,255,255,0.2)";
+  
+  
+      const files = e.dataTransfer.files;
+  
+  
+      if (files.length > 0) {
+  
+        const file = files[0];
+  
+  
+        // Check audio file
+        if (!file.type.startsWith("audio/")) {
+  
+          alert("Please upload an audio file.");
+  
+          return;
+  
+        }
+  
+  
+        selectedFile = file;
+  
+  
+        audioInput.files = files;
+  
+  
+        dropText.innerHTML = `
+          Selected File:
+          <strong>${file.name}</strong>
+        `;
+  
+      }
+  
+    });
+  
+  
+    // ==========================================
+    // ANALYZE AUDIO
+    // ==========================================
+  
+    analyzeBtn.addEventListener('click', async () => {
+  
+  
+      // --------------------------------------
+      // CHECK FILE
+      // --------------------------------------
+  
+      if (!selectedFile) {
+  
+        alert(
+          "Please upload or select an audio file first!"
+        );
+  
+        return;
+  
+      }
+  
+  
+      // --------------------------------------
+      // FILE SIZE CHECK - 20MB
+      // --------------------------------------
+  
+      const MAX_SIZE =
+        20 * 1024 * 1024;
+  
+  
+      if (selectedFile.size > MAX_SIZE) {
+  
+        alert(
+          "Audio file must be smaller than 20MB."
+        );
+  
+        return;
+  
+      }
+  
+  
+      // --------------------------------------
+      // UI LOADING STATE
+      // --------------------------------------
+  
+      analyzeBtn.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
+  
       analyzeBtn.disabled = true;
-
-      setTimeout(() => {
-        analyzeBtn.innerText = 'Analyze Audio';
-        analyzeBtn.disabled = false;
-
-        reportSection.style.display = 'block';
-        reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
+  
+  
+      try {
+  
+  
+        // --------------------------------------
+        // CREATE FORM DATA
+        // --------------------------------------
+  
+        const formData = new FormData();
+  
+  
+        // "file" MUST MATCH FASTAPI PARAMETER
+        formData.append(
+          "file",
+          selectedFile
+        );
+  
+  
+        // --------------------------------------
+        // SEND AUDIO TO BACKEND
+        // --------------------------------------
+  
+        const response = await fetch(
+          API_URL,
+          {
+  
+            method: "POST",
+  
+            body: formData
+  
+          }
+        );
+  
+  
+        const data =
+          await response.json();
+  
+  
+        // --------------------------------------
+        // HANDLE BACKEND ERROR
+        // --------------------------------------
+  
+        if (!response.ok) {
+  
+          throw new Error(
+            data.detail ||
+            "Analysis failed"
+          );
+  
+        }
+  
+  
+        console.log(
+          "API Response:",
+          data
+        );
+  
+  
+        // --------------------------------------
+        // SHOW REPORT
+        // --------------------------------------
+  
+        updateReport(data);
+  
+  
+        reportSection.style.display =
+          'block';
+  
+  
+        reportSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+  
+  
+      }
+  
+  
+      catch (error) {
+  
+        console.error(error);
+  
+  
+        alert(
+          "❌ Error analyzing audio: " +
+          error.message
+        );
+  
+      }
+  
+  
+      finally {
+  
+  
+        analyzeBtn.innerHTML =
+          'Analyze Audio';
+  
+  
+        analyzeBtn.disabled =
+          false;
+  
+      }
+  
     });
+  
+  
+    // ==========================================
+    // UPDATE REPORT WITH AI RESULTS
+    // ==========================================
+  
+    function updateReport(data) {
+  
+  
+      const prediction =
+        data.prediction;
+  
+  
+      const confidence =
+        data.confidence;
+  
+  
+      const fakeProbability =
+        data.fake_probability;
+  
+  
+      const realProbability =
+        data.real_probability;
+  
+  
+      // --------------------------------------
+      // TOP SCORE
+      // --------------------------------------
+  
+      const scoreVal =
+        document.querySelector('.score-val');
+  
+  
+      scoreVal.textContent =
+        confidence + "%";
+  
+  
+      // --------------------------------------
+      // BADGE
+      // --------------------------------------
+  
+      const badge =
+        document.querySelector('.badge-authentic');
+  
+  
+      // --------------------------------------
+      // SUMMARY
+      // --------------------------------------
+  
+      const summaryText =
+        document.querySelector('.summary-text');
+  
+  
+      if (prediction === "REAL") {
+  
+  
+        badge.innerHTML = `
+          <i class="fa-solid fa-circle-check"></i>
+          Likely Authentic
+        `;
+  
+  
+        badge.style.color =
+          "#22c55e";
+  
+  
+        summaryText.textContent =
+          `Our AI model predicts that this audio is likely authentic human speech with ${confidence}% confidence.`;
+  
+  
+      } else {
+  
+  
+        badge.innerHTML = `
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Likely AI Generated
+        `;
+  
+  
+        badge.style.color =
+          "#ef4444";
+  
+  
+        summaryText.textContent =
+          `Our AI model detected possible signs of AI-generated or manipulated speech with ${confidence}% confidence. Please verify this audio before trusting it.`;
+  
+      }
+  
+  
+      // --------------------------------------
+      // UPDATE BREAKDOWN
+      // --------------------------------------
+  
+      const progressBars =
+        document.querySelectorAll(
+          '.progress-track div'
+        );
+  
+  
+      // First bar = Authenticity
+      progressBars[0].style.width =
+        realProbability + "%";
+  
+  
+      // Second bar = Fake Probability
+      progressBars[1].style.width =
+        fakeProbability + "%";
+  
+  
+      // Update colors dynamically
+  
+      progressBars[0].style.backgroundColor =
+        "#22c55e";
+  
+  
+      progressBars[1].style.backgroundColor =
+        "#ef4444";
+  
+  
+      // --------------------------------------
+      // UPDATE BREAKDOWN LABELS
+      // --------------------------------------
+  
+      const breakdownRows =
+        document.querySelectorAll(
+          '.breakdown-row'
+        );
+  
+  
+      if (breakdownRows.length >= 2) {
+  
+  
+        breakdownRows[0].querySelector(
+          '.breakdown-label'
+        ).textContent =
+          `Authenticity ${realProbability}%`;
+  
+  
+        breakdownRows[1].querySelector(
+          '.breakdown-label'
+        ).textContent =
+          `Fake Probability ${fakeProbability}%`;
+  
+      }
+  
+  
+      // --------------------------------------
+      // UPDATE DETAILED REPORT
+      // --------------------------------------
+  
+      const details =
+        document.querySelectorAll(
+          '.analysis-detail p'
+        );
+  
+  
+      if (prediction === "REAL") {
+  
+  
+        details[0].textContent =
+          "The model found stronger patterns associated with authentic human speech than AI-generated speech.";
+  
+  
+        details[1].textContent =
+          "The audio was processed and evaluated by the trained voice authenticity detection model.";
+  
+  
+        details[2].textContent =
+          `Final model prediction: REAL with ${confidence}% confidence.`;
+  
+  
+      } else {
+  
+  
+        details[0].textContent =
+          "The model detected patterns that may indicate synthetic or AI-generated speech.";
+  
+  
+        details[1].textContent =
+          "Audio characteristics were analyzed for possible artifacts associated with voice synthesis or manipulation.";
+  
+  
+        details[2].textContent =
+          `Final model prediction: FAKE with ${confidence}% confidence.`;
+  
+      }
+  
+    }
+  
   </script>
 </body>
 </html>
