@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrueTone - AI Voice Detector</title>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-top: #ffffff;
+      --bg-bottom: #3b4249;
+      --text-main: #111827;
+      --text-muted: #555b62;
+      --card-bg: rgba(255, 255, 255, 0.12);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --card-hover: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #ffffff 0%, #eceef1 22%, #a4abb4 55%, #464c53 82%, #32373c 100%);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    header {
+      width: 100%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #d4d7db;
+      padding: 1.25rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #12161a;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 1.05rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover {
+      color: #000000;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3.5rem 1.5rem 4rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #1c2127;
+      letter-spacing: -1.2px;
+      margin-bottom: 1.75rem;
+    }
+
+    .sub-text {
+      color: var(--text-muted);
+      font-size: 1.06rem;
+      line-height: 1.5;
+      max-width: 650px;
+      margin-bottom: 2.75rem;
+      font-weight: 400;
+    }
+
+    /* Upload Box */
+    .dropzone {
+      width: 100%;
+      max-width: 580px;
+      border: 1.5px dashed rgba(255, 255, 255, 0.45);
+      border-radius: 12px;
+      padding: 3rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .dropzone:hover, .dropzone.drag-over {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .dropzone-icon {
+      width: 64px;
+      height: 64px;
+      color: #21262d;
+      stroke-width: 2.2;
+    }
+
+    .dropzone p {
+      font-size: 0.95rem;
+      color: #21262d;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .dropzone .formats {
+      font-size: 0.9rem;
+      color: #333a42;
+      font-weight: 500;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    /* Preset Audio Options */
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 820px;
+      margin-top: 6rem;
+    }
+
+    .sample-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      color: #1a1e22;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .sample-btn:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .sample-btn:active {
+      transform: translateY(0);
+    }
+
+    .soundwave-icon {
+      background: #2b3036;
+      border-radius: 6px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+    }
+
+    /* Result Modal / Notification */
+    .status-panel {
+      display: none;
+      margin-top: 2rem;
+      padding: 1rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .status-panel.analyzing {
+      display: block;
+      background: rgba(255, 255, 255, 0.4);
+      color: #12161a;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .status-panel.human {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+
+    .status-panel.ai {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      .samples-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 3.5rem;
+      }
+      h1 {
+        margin-bottom: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header nav {
+        gap: 1rem;
+      }
+      .samples-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <a href="#" class="brand">TrueTone</a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#login">
+        <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+        Sign In / Login
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main Section -->
+  <main>
+    <h1>AI Voice Detector</h1>
+    <p class="sub-text">
+      Not sure if a voice is real? TrueTone can help. Upload a voice recording and we'll check it for signs of AI generation. In a few moments, you'll get a simple result. Real voice or AI-generated — know before you trust it.
+    </p>
+
+    <!-- Upload Dropzone -->
+    <div class="dropzone" id="dropzone" role="button" tabindex="0">
+      <i data-lucide="headphones" class="dropzone-icon"></i>
+      <div>
+        <p>Drag & drop an audio file or click</p>
+        <span class="formats">WAV, MP3, AAC, OGG, FLAC up to 20MB</span>
+      </div>
+      <input type="file" id="file-input" accept=".wav, .mp3, .aac, .ogg, .flac, audio/*" />
+    </div>
+
+    <!-- Status & Feedback Area -->
+    <div id="status-panel" class="status-panel"></div>
+
+    <!-- Sample Buttons -->
+    <div class="samples-grid">
+      <button class="sample-btn" data-name="Audio 1" data-label="Human Voice (98% confidence)">
+        <span class="soundwave-icon">
+          <i data-lucide="audio-lines" style="width: 20px; height: 20px;"></i>
+        </span>
+        <span>Audio 1</span>
+      </button>
+
+      <button class="sample-btn" data-name="Audio 2" data-label="AI-Generated Voice (99% confidence)">
+        <span class="soundwave-icon">
+          <i data-lucide="audio-lines" style="width: 20px; height: 20px;"></i>
+        </span>
+        <span>Audio 2</span>
+      </button>
+
+      <button class="sample-btn" data-name="Audio 3" data-label="Human Voice (94% confidence)">
+        <span class="soundwave-icon">
+          <i data-lucide="audio-lines" style="width: 20px; height: 20px;"></i>
+        </span>
+        <span>Audio 3</span>
+      </button>
+
+      <button class="sample-btn" data-name="Audio 4" data-label="AI-Generated Voice (92% confidence)">
+        <span class="soundwave-icon">
+          <i data-lucide="audio-lines" style="width: 20px; height: 20px;"></i>
+        </span>
+        <span>Audio 4</span>
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const statusPanel = document.getElementById('status-panel');
+    const sampleBtns = document.querySelectorAll('.sample-btn');
+
+    const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+
+    // Click handler to open file picker
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    // Drag-and-drop feedback
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzone.classList.add('drag-over');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+      });
+    });
+
+    // Handle dropped file
+    dropzone.addEventListener('drop', (e) => {
+      const files = e.dataTransfer.files;
+      if (files.length) handleFile(files[0]);
+    });
+
+    // Handle standard file selection
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+
+    // Analyze File Routine
+    function handleFile(file) {
+      if (file.size > MAX_SIZE) {
+        showResult('File exceeds the 20MB limit.', 'ai');
+        return;
+      }
+
+      showLoading(`Analyzing "${file.name}"...`);
+
+      // Mock analysis completion
+      setTimeout(() => {
+        const isAI = Math.random() > 0.5;
+        const confidence = (85 + Math.random() * 14).toFixed(1);
+        if (isAI) {
+          showResult(`Result: High Probability of AI Generation (${confidence}%)`, 'ai');
+        } else {
+          showResult(`Result: Likely an Authentic Human Voice (${confidence}%)`, 'human');
+        }
+      }, 1600);
+    }
+
+    // Sample audio buttons
+    sampleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        const verdict = btn.getAttribute('data-label');
+        showLoading(`Testing preset: ${name}...`);
+
+        setTimeout(() => {
+          const isAI = verdict.includes('AI');
+          showResult(`${name}: ${verdict}`, isAI ? 'ai' : 'human');
+        }, 1000);
+      });
+    });
+
+    function showLoading(text) {
+      statusPanel.className = 'status-panel analyzing';
+      statusPanel.textContent = text;
+    }
+
+    function showResult(text, type) {
+      statusPanel.className = `status-panel ${type}`;
+      statusPanel.textContent = text;
+    }
+  </script>
+</body>
+</html>

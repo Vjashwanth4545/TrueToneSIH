@@ -1,0 +1,19 @@
+# Mac
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+__pycache__/
+
+# Python
+*.pyc
+
+# Large AI models
+*.pth
+*.pt
+
+# Audio datasets
+data/
+dataset/
+*.wav
+*.mp3
