@@ -12,8 +12,3 @@ __pycache__/
 *.pth
 *.pt
 
-# Audio datasets
-data/
-dataset/
-*.wav
-*.mp3

@@ -18,6 +18,7 @@
       --text-muted: #d0d6fa;
       --green-accent: #22c55e;
       --red-accent: #ef4444;
+      --footer-bg: #444b7d;
     }
 
     * {
@@ -34,9 +35,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 80px;
     }
 
+    /* FULL WIDTH HEADER */
     .header-full {
       width: 100%;
       background-color: #6d96ff;
@@ -79,6 +80,7 @@
       opacity: 0.7;
     }
 
+    /* Main Container */
     .main-container {
       width: 100%;
       max-width: 950px;
@@ -105,6 +107,7 @@
       margin-bottom: 40px;
     }
 
+    /* Interaction Grid */
     .interaction-grid {
       width: 100%;
       display: grid;
@@ -114,6 +117,7 @@
       margin-bottom: 34px;
     }
 
+    /* Drop Zone */
     .dropzone {
       border: 2px dashed rgba(255, 255, 255, 0.5);
       background-color: var(--card-translucent);
@@ -146,6 +150,7 @@
       line-height: 1.4;
     }
 
+    /* Samples */
     .samples-container {
       display: flex;
       flex-direction: column;
@@ -198,6 +203,7 @@
       font-size: 1.4rem;
     }
 
+    /* Analyze Button */
     .analyze-btn {
       background-color: var(--btn-color);
       color: #ffffff;
@@ -209,6 +215,7 @@
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
       transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-right: 400px;;
     }
 
     .analyze-btn:hover {
@@ -219,6 +226,9 @@
       transform: scale(0.98);
     }
 
+    /* ========================================= */
+    /* Report Section                            */
+    /* ========================================= */
     .report-wrapper {
       display: none;
       width: 100%;
@@ -368,11 +378,15 @@
       line-height: 1.45;
     }
 
+    /* ========================================= */
+    /* How to Use Section                        */
+    /* ========================================= */
     .how-to-use-section {
       width: 100%;
       max-width: 950px;
       margin-top: 50px;
       padding: 0 20px;
+      margin-bottom: 90px;
     }
 
     .how-to-grid {
@@ -501,9 +515,191 @@
       color: #fff;
     }
 
+    /* ========================================= */
+    /* Real-World Use Case Story Sections       */
+    /* ========================================= */
+    .use-cases-container {
+      width: 100%;
+      max-width: 1050px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 90px;
+      margin-bottom: 100px;
+    }
+
+    .use-case-block {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .use-case-header {
+      text-align: left;
+      border-bottom: 1px solid rgba(26, 30, 54, 0.25);
+      padding-bottom: 14px;
+    }
+
+    .use-case-header.header-right {
+      text-align: right;
+    }
+
+    .use-case-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #121426;
+      line-height: 1.2;
+    }
+
+    .use-case-body {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .use-case-body.reverse {
+      grid-template-columns: 1.15fr 1fr;
+    }
+
+    .use-case-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .use-case-text {
+      font-size: 0.95rem;
+      color: #1e2442;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    /* ========================================= */
+    /* FOOTER STYLING                            */
+    /* ========================================= */
+    .footer-full {
+      width: 100%;
+      background-color: var(--footer-bg);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 60px 20px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      width: 100%;
+      max-width: 1150px;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .footer-col h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 18px;
+      letter-spacing: -0.2px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .footer-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      max-width: 320px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .footer-social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .footer-social-btn:hover {
+      background-color: var(--btn-color);
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      width: 100%;
+      max-width: 1150px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
     @media (max-width: 768px) {
       .interaction-grid, .report-top-banner, .report-grid, .how-to-grid {
         grid-template-columns: 1fr;
+      }
+      .use-case-body, .use-case-body.reverse {
+        grid-template-columns: 1fr;
+      }
+      .use-case-header, .use-case-header.header-right {
+        text-align: left;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
       }
       .score-box {
         border-right: none;
@@ -533,10 +729,11 @@
     </p>
 
     <div class="interaction-grid">
-      <div class="dropzone" id="dropArea" onclick="document.getElementById('audioInput').click()">
+      <div class="dropzone" id="dropArea">
         <i class="fa-solid fa-headphones-simple"></i>
         <p id="dropText">Drag & drop an audio file or click<br>WAV, MP3, AAC, OGG, FLAC up to 20MB</p>
         <input type="file" id="audioInput" accept="audio/*" style="display: none;" />
+        <audio id="audioPlayer" controls style="display: none; width: 100%; margin-top: 15px;"></audio>
       </div>
 
       <div class="samples-container">
@@ -676,637 +873,344 @@
       </div>
     </div>
   </section>
+
+  <section class="use-cases-container">
+
+    <div class="use-case-block">
+      <div class="use-case-header header-right">
+        <h2 class="use-case-title">Spot Fake Family Calls<br>Before It’s Too Late</h2>
+      </div>
+      <div class="use-case-body">
+        <img class="use-case-img" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=80" alt="Phone call incoming from Mom on a table" />
+        <div class="use-case-text">
+          Ever get a weird call that sounds like your daughter or your mom crying for help? It's scary—and scammers know that. They use AI-generated voices to fake family emergencies and trick you into sending money. With our deepfake voice detection tool, you can upload the call and check in seconds if the voice is real. You'll see a simple report showing how likely it's a fake, plus the exact timepoints that raised red flags. I actually tested this with a prank call—and yeah, I was shocked. It looked real. But the tool nailed it. If you're a parent or care for elderly relatives, this isn't just helpful—it's peace of mind.
+        </div>
+      </div>
+    </div>
+
+    <div class="use-case-block">
+      <div class="use-case-header">
+        <h2 class="use-case-title">Keep Business Calls Safe<br>from Deepfake Scams</h2>
+      </div>
+      <div class="use-case-body reverse">
+        <div class="use-case-text">
+          Voice phishing is getting smarter. Criminals now use AI voices to pretend they're your boss, asking for wire transfers or sensitive info. With just a few seconds of audio, they can fake someone's voice and sound 100% real. That's wild. Our AI deepfake voice detection system helps you catch it before the damage is done. Just upload the recording, and the platform checks if it's AI-generated. You'll get a breakdown—authenticity score, risky sections, everything. I've worked in IT for years, and honestly, this tool is the kind of security layer we needed five years ago.
+        </div>
+        <img class="use-case-img" src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80" alt="Business team meeting in conference room" />
+      </div>
+    </div>
+
+    <div class="use-case-block">
+      <div class="use-case-header header-right">
+        <h2 class="use-case-title">Double-Check Audio Proof<br>Before You Believe It</h2>
+      </div>
+      <div class="use-case-body">
+        <img class="use-case-img" src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=800&auto=format&fit=crop&q=80" alt="Smartphone displaying video call resting on sofa" />
+        <div class="use-case-text">
+          If you've just been sent a recording that sounds a little too flawless, pause before you trust it. Our platform analyses audio in seconds, giving you a detailed report on its authenticity. Voice cloning can fool anyone—people have nearly ruined relationships over shocking audio clips, only to find out later they were completely AI-generated. Protect your reputation and let the data reveal the truth first. Our system exposes the digital fingerprints and unnatural acoustic patterns that human ears easily miss. You do not need an audio engineering background to understand the straightforward, jargon-free results. Simply upload the questionable file, review your authenticity score, and get absolute peace of mind.
+        </div>
+      </div>
+    </div>
+
+    <div class="use-case-block">
+      <div class="use-case-header">
+        <h2 class="use-case-title">Catch Fake Voices in<br>Interviews and Online Content</h2>
+      </div>
+      <div class="use-case-body reverse">
+        <div class="use-case-text">
+          If you've just been sent a recording that sounds a little too flawless, pause before you trust it. Our platform analyses audio in seconds, giving you a detailed report on its authenticity. Voice cloning can fool anyone—people have nearly ruined relationships over shocking audio clips, only to find out later they were completely AI-generated. Protect your reputation and let the data reveal the truth first. Our system exposes the digital fingerprints and unnatural acoustic patterns that human ears easily miss. You do not need an audio engineering background to understand the straightforward, jargon-free results. Simply upload the questionable file, review your authenticity score, and get absolute peace of mind.
+        </div>
+        <img class="use-case-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80" alt="Laptop on desk with video call" />
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="footer-full">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <span class="footer-logo">TrueTone</span>
+        <p class="footer-desc">
+          State-of-the-art AI-powered deepfake voice detection. Helping individuals and businesses verify audio authenticity with high accuracy.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="footer-social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="footer-social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="#">Voice Detector</a></li>
+          <li><a href="#">API Access</a></li>
+          <li><a href="#">Enterprise Security</a></li>
+          <li><a href="#">Audio Samples</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Research Paper</a></li>
+          <li><a href="#">Blog & News</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal & Trust</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Data Retention</a></li>
+          <li><a href="#">Security Safeguards</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 TrueTone AI. All rights reserved.</span>
+      <span>Built for Voice Authenticity Verification</span>
+    </div>
+  </footer>
+
   <script>
-    // ==========================================
-    // API URL
-    // ==========================================
-  
     const API_URL = "http://127.0.0.1:8000/predict";
-  
-  
-    // ==========================================
-    // ELEMENTS
-    // ==========================================
-  
+
     const analyzeBtn = document.getElementById('analyzeBtn');
     const reportSection = document.getElementById('reportSection');
     const audioInput = document.getElementById('audioInput');
     const dropText = document.getElementById('dropText');
     const dropArea = document.getElementById('dropArea');
     const sampleBtns = document.querySelectorAll('.sample-btn');
-  
+    const audioPlayer = document.getElementById('audioPlayer');
+
     let currentAudio = null;
     let activeBtn = null;
-  
-    // Stores the actual file that will be sent to backend
     let selectedFile = null;
-  
-  
-    // ==========================================
-    // RESET SAMPLE BUTTONS
-    // ==========================================
-  
+    let audioURL = null;
+
     function resetSampleButtons() {
-  
       sampleBtns.forEach(btn => {
-  
         btn.classList.remove('active');
-  
         const icon = btn.querySelector('i');
-  
         icon.className = 'fa-solid fa-volume-high';
-  
       });
-  
     }
-  
-  
-    // ==========================================
-    // SELECT SAMPLE AUDIO
-    // ==========================================
-  
+
+    function loadAudioPlayer(file) {
+      if (audioURL) {
+        URL.revokeObjectURL(audioURL);
+      }
+      audioURL = URL.createObjectURL(file);
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      audioPlayer.src = audioURL;
+      audioPlayer.style.display = "block";
+      audioPlayer.load();
+    }
+
     sampleBtns.forEach(btn => {
-  
       btn.addEventListener('click', async (e) => {
-  
         e.stopPropagation();
-  
         const audioSrc = btn.getAttribute('data-src');
-  
-        const label =
-          btn.querySelector('.btn-text').innerText;
-  
-  
-        // --------------------------------------
-        // PLAY / PAUSE SAME AUDIO
-        // --------------------------------------
-  
-        if (
-          currentAudio &&
-          activeBtn === btn &&
-          !currentAudio.paused
-        ) {
-  
+        const label = btn.querySelector('.btn-text').innerText;
+
+        if (currentAudio && activeBtn === btn && !currentAudio.paused) {
           currentAudio.pause();
-  
-          btn.querySelector('i').className =
-            'fa-solid fa-volume-high';
-  
+          btn.querySelector('i').className = 'fa-solid fa-volume-high';
           btn.classList.remove('active');
-  
           return;
-  
         }
-  
-  
-        // --------------------------------------
-        // STOP PREVIOUS AUDIO
-        // --------------------------------------
-  
+
         if (currentAudio) {
-  
           currentAudio.pause();
-  
           currentAudio.currentTime = 0;
-  
         }
-  
-  
+
         resetSampleButtons();
-  
-  
-        // --------------------------------------
-        // PLAY SELECTED SAMPLE
-        // --------------------------------------
-  
+
         currentAudio = new Audio(audioSrc);
-  
         activeBtn = btn;
-  
         btn.classList.add('active');
-  
-        btn.querySelector('i').className =
-          'fa-solid fa-circle-pause';
-  
-  
+        btn.querySelector('i').className = 'fa-solid fa-circle-pause';
+
         currentAudio.play().catch(err => {
-  
-          console.warn(
-            "Could not play audio:",
-            err
-          );
-  
+          console.warn("Could not play audio:", err);
         });
-  
-  
+
         currentAudio.onended = () => {
-  
-          btn.querySelector('i').className =
-            'fa-solid fa-volume-high';
-  
+          btn.querySelector('i').className = 'fa-solid fa-volume-high';
           btn.classList.remove('active');
-  
         };
-  
-  
-        // --------------------------------------
-        // GET SAMPLE AS FILE FOR API
-        // --------------------------------------
-  
+
         try {
-  
           const response = await fetch(audioSrc);
-  
-          const blob = await response.blob();
-  
-          const filename =
-            audioSrc.split('/').pop();
-  
-          selectedFile = new File(
-            [blob],
-            filename,
-            {
-              type: blob.type || "audio/wav"
-            }
-          );
-  
-  
-          dropText.innerHTML = `
-            Selected Sample:
-            <strong>${label}</strong>
-          `;
-  
-  
-        } catch (error) {
-  
-          console.error(
-            "Error loading sample:",
-            error
-          );
-  
-          alert(
-            "Could not load the sample audio file."
-          );
-  
-        }
-  
-      });
-  
-    });
-  
-  
-    // ==========================================
-    // MANUAL FILE SELECTION
-    // ==========================================
-  
-    audioInput.addEventListener('change', (e) => {
-  
-      if (e.target.files.length > 0) {
-  
-        // Stop sample audio
-        if (currentAudio) {
-  
-          currentAudio.pause();
-  
-          currentAudio.currentTime = 0;
-  
-        }
-  
-  
-        resetSampleButtons();
-  
-  
-        // Store selected file
-        selectedFile =
-          e.target.files[0];
-  
-  
-        dropText.innerHTML = `
-          Selected File:
-          <strong>${selectedFile.name}</strong>
-        `;
-  
-      }
-  
-    });
-  
-  
-    // ==========================================
-    // DRAG AND DROP
-    // ==========================================
-  
-    dropArea.addEventListener('dragover', (e) => {
-  
-      e.preventDefault();
-  
-      dropArea.style.borderColor = "#ffffff";
-  
-      dropArea.style.backgroundColor =
-        "rgba(255,255,255,0.35)";
-  
-    });
-  
-  
-    dropArea.addEventListener('dragleave', () => {
-  
-      dropArea.style.borderColor =
-        "rgba(255,255,255,0.5)";
-  
-      dropArea.style.backgroundColor =
-        "rgba(255,255,255,0.2)";
-  
-    });
-  
-  
-    dropArea.addEventListener('drop', (e) => {
-  
-      e.preventDefault();
-  
-  
-      dropArea.style.borderColor =
-        "rgba(255,255,255,0.5)";
-  
-      dropArea.style.backgroundColor =
-        "rgba(255,255,255,0.2)";
-  
-  
-      const files = e.dataTransfer.files;
-  
-  
-      if (files.length > 0) {
-  
-        const file = files[0];
-  
-  
-        // Check audio file
-        if (!file.type.startsWith("audio/")) {
-  
-          alert("Please upload an audio file.");
-  
-          return;
-  
-        }
-  
-  
-        selectedFile = file;
-  
-  
-        audioInput.files = files;
-  
-  
-        dropText.innerHTML = `
-          Selected File:
-          <strong>${file.name}</strong>
-        `;
-  
-      }
-  
-    });
-  
-  
-    // ==========================================
-    // ANALYZE AUDIO
-    // ==========================================
-  
-    analyzeBtn.addEventListener('click', async () => {
-  
-  
-      // --------------------------------------
-      // CHECK FILE
-      // --------------------------------------
-  
-      if (!selectedFile) {
-  
-        alert(
-          "Please upload or select an audio file first!"
-        );
-  
-        return;
-  
-      }
-  
-  
-      // --------------------------------------
-      // FILE SIZE CHECK - 20MB
-      // --------------------------------------
-  
-      const MAX_SIZE =
-        20 * 1024 * 1024;
-  
-  
-      if (selectedFile.size > MAX_SIZE) {
-  
-        alert(
-          "Audio file must be smaller than 20MB."
-        );
-  
-        return;
-  
-      }
-  
-  
-      // --------------------------------------
-      // UI LOADING STATE
-      // --------------------------------------
-  
-      analyzeBtn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
-  
-      analyzeBtn.disabled = true;
-  
-  
-      try {
-  
-  
-        // --------------------------------------
-        // CREATE FORM DATA
-        // --------------------------------------
-  
-        const formData = new FormData();
-  
-  
-        // "file" MUST MATCH FASTAPI PARAMETER
-        formData.append(
-          "file",
-          selectedFile
-        );
-  
-  
-        // --------------------------------------
-        // SEND AUDIO TO BACKEND
-        // --------------------------------------
-  
-        const response = await fetch(
-          API_URL,
-          {
-  
-            method: "POST",
-  
-            body: formData
-  
+          if (!response.ok) {
+            throw new Error("Sample audio could not be loaded");
           }
-        );
-  
-  
-        const data =
-          await response.json();
-  
-  
-        // --------------------------------------
-        // HANDLE BACKEND ERROR
-        // --------------------------------------
-  
-        if (!response.ok) {
-  
-          throw new Error(
-            data.detail ||
-            "Analysis failed"
-          );
-  
+          const blob = await response.blob();
+          const filename = audioSrc.split('/').pop();
+          selectedFile = new File([blob], filename, {
+            type: blob.type || "audio/wav"
+          });
+
+          dropText.innerHTML = `Selected Sample: <strong>${label}</strong>`;
+          loadAudioPlayer(selectedFile);
+        } catch (error) {
+          console.error("Error loading sample:", error);
+          alert("Could not load the sample audio file.");
         }
-  
-  
-        console.log(
-          "API Response:",
-          data
-        );
-  
-  
-        // --------------------------------------
-        // SHOW REPORT
-        // --------------------------------------
-  
+      });
+    });
+
+    audioInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+        resetSampleButtons();
+        selectedFile = e.target.files[0];
+        dropText.innerHTML = `Selected File: <strong>${selectedFile.name}</strong>`;
+        loadAudioPlayer(selectedFile);
+      }
+    });
+
+    dropArea.addEventListener('click', (e) => {
+      if (e.target.closest('audio') || e.target.closest('input')) {
+        return;
+      }
+      audioInput.click();
+    });
+
+    audioPlayer.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    dropArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropArea.style.borderColor = "#ffffff";
+      dropArea.style.backgroundColor = "rgba(255,255,255,0.35)";
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.style.borderColor = "rgba(255,255,255,0.5)";
+      dropArea.style.backgroundColor = "rgba(255,255,255,0.2)";
+    });
+
+    dropArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropArea.style.borderColor = "rgba(255,255,255,0.5)";
+      dropArea.style.backgroundColor = "rgba(255,255,255,0.2)";
+
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        if (!file.type.startsWith("audio/")) {
+          alert("Please upload an audio file.");
+          return;
+        }
+        selectedFile = file;
+        audioInput.files = files;
+        dropText.innerHTML = `Selected File: <strong>${file.name}</strong>`;
+        loadAudioPlayer(file);
+      }
+    });
+
+    analyzeBtn.addEventListener('click', async () => {
+      if (!selectedFile) {
+        alert("Please upload or select an audio file first!");
+        return;
+      }
+
+      const MAX_SIZE = 20 * 1024 * 1024;
+      if (selectedFile.size > MAX_SIZE) {
+        alert("Audio file must be smaller than 20MB.");
+        return;
+      }
+
+      analyzeBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
+      analyzeBtn.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || "Analysis failed");
+        }
+
         updateReport(data);
-  
-  
-        reportSection.style.display =
-          'block';
-  
-  
+        reportSection.style.display = 'block';
         reportSection.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         });
-  
-  
-      }
-  
-  
-      catch (error) {
-  
+      } catch (error) {
         console.error(error);
-  
-  
-        alert(
-          "❌ Error analyzing audio: " +
-          error.message
-        );
-  
+        alert("❌ Error analyzing audio: " + error.message);
+      } finally {
+        analyzeBtn.innerHTML = 'Analyze Audio';
+        analyzeBtn.disabled = false;
       }
-  
-  
-      finally {
-  
-  
-        analyzeBtn.innerHTML =
-          'Analyze Audio';
-  
-  
-        analyzeBtn.disabled =
-          false;
-  
-      }
-  
     });
-  
-  
-    // ==========================================
-    // UPDATE REPORT WITH AI RESULTS
-    // ==========================================
-  
+
     function updateReport(data) {
-  
-  
-      const prediction =
-        data.prediction;
-  
-  
-      const confidence =
-        data.confidence;
-  
-  
-      const fakeProbability =
-        data.fake_probability;
-  
-  
-      const realProbability =
-        data.real_probability;
-  
-  
-      // --------------------------------------
-      // TOP SCORE
-      // --------------------------------------
-  
-      const scoreVal =
-        document.querySelector('.score-val');
-  
-  
-      scoreVal.textContent =
-        confidence + "%";
-  
-  
-      // --------------------------------------
-      // BADGE
-      // --------------------------------------
-  
-      const badge =
-        document.querySelector('.badge-authentic');
-  
-  
-      // --------------------------------------
-      // SUMMARY
-      // --------------------------------------
-  
-      const summaryText =
-        document.querySelector('.summary-text');
-  
-  
+      const prediction = data.prediction;
+      const confidence = data.confidence;
+      const fakeProbability = data.fake_probability;
+      const realProbability = data.real_probability;
+
+      const scoreVal = document.querySelector('.score-val');
+      scoreVal.textContent = confidence + "%";
+
+      const badge = document.querySelector('.badge-authentic');
+      const summaryText = document.querySelector('.summary-text');
+
       if (prediction === "REAL") {
-  
-  
-        badge.innerHTML = `
-          <i class="fa-solid fa-circle-check"></i>
-          Likely Authentic
-        `;
-  
-  
-        badge.style.color =
-          "#22c55e";
-  
-  
-        summaryText.textContent =
-          `Our AI model predicts that this audio is likely authentic human speech with ${confidence}% confidence.`;
-  
-  
+        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Likely Authentic`;
+        badge.style.color = "#22c55e";
+        summaryText.textContent = `Our AI model predicts that this audio is likely authentic human speech with ${confidence}% confidence.`;
       } else {
-  
-  
-        badge.innerHTML = `
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          Likely AI Generated
-        `;
-  
-  
-        badge.style.color =
-          "#ef4444";
-  
-  
-        summaryText.textContent =
-          `Our AI model detected possible signs of AI-generated or manipulated speech with ${confidence}% confidence. Please verify this audio before trusting it.`;
-  
+        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Likely AI Generated`;
+        badge.style.color = "#ef4444";
+        summaryText.textContent = `Our AI model detected possible signs of AI-generated or manipulated speech with ${confidence}% confidence. Please verify this audio before trusting it.`;
       }
-  
-  
-      // --------------------------------------
-      // UPDATE BREAKDOWN
-      // --------------------------------------
-  
-      const progressBars =
-        document.querySelectorAll(
-          '.progress-track div'
-        );
-  
-  
-      // First bar = Authenticity
-      progressBars[0].style.width =
-        realProbability + "%";
-  
-  
-      // Second bar = Fake Probability
-      progressBars[1].style.width =
-        fakeProbability + "%";
-  
-  
-      // Update colors dynamically
-  
-      progressBars[0].style.backgroundColor =
-        "#22c55e";
-  
-  
-      progressBars[1].style.backgroundColor =
-        "#ef4444";
-  
-  
-      // --------------------------------------
-      // UPDATE BREAKDOWN LABELS
-      // --------------------------------------
-  
-      const breakdownRows =
-        document.querySelectorAll(
-          '.breakdown-row'
-        );
-  
-  
+
+      const progressBars = document.querySelectorAll('.progress-track div');
+      progressBars[0].style.width = realProbability + "%";
+      progressBars[1].style.width = fakeProbability + "%";
+      progressBars[0].style.backgroundColor = "#22c55e";
+      progressBars[1].style.backgroundColor = "#ef4444";
+
+      const breakdownRows = document.querySelectorAll('.breakdown-row');
       if (breakdownRows.length >= 2) {
-  
-  
-        breakdownRows[0].querySelector(
-          '.breakdown-label'
-        ).textContent =
-          `Authenticity ${realProbability}%`;
-  
-  
-        breakdownRows[1].querySelector(
-          '.breakdown-label'
-        ).textContent =
-          `Fake Probability ${fakeProbability}%`;
-  
+        breakdownRows[0].querySelector('.breakdown-label').textContent = `Authenticity ${realProbability}%`;
+        breakdownRows[1].querySelector('.breakdown-label').textContent = `Fake Probability ${fakeProbability}%`;
       }
-  
-  
-      // --------------------------------------
-      // UPDATE DETAILED REPORT
-      // --------------------------------------
-  
-      const details =
-        document.querySelectorAll(
-          '.analysis-detail p'
-        );
-  
-  
+
+      const details = document.querySelectorAll('.analysis-detail p');
       if (prediction === "REAL") {
-  
-  
-        details[0].textContent =
-          "The model found stronger patterns associated with authentic human speech than AI-generated speech.";
-  
-  
-        details[1].textContent =
-          "The audio was processed and evaluated by the trained voice authenticity detection model.";
-  
-  
-        details[2].textContent =
-          `Final model prediction: REAL with ${confidence}% confidence.`;
-  
-  
+        details[0].textContent = "The model found stronger patterns associated with authentic human speech than AI-generated speech.";
+        details[1].textContent = "The audio was processed and evaluated by the trained voice authenticity detection model.";
+        details[2].textContent = `Final model prediction: REAL with ${confidence}% confidence.`;
       } else {
-  
-  
-        details[0].textContent =
-          "The model detected patterns that may indicate synthetic or AI-generated speech.";
-  
-  
-        details[1].textContent =
-          "Audio characteristics were analyzed for possible artifacts associated with voice synthesis or manipulation.";
-  
-  
-        details[2].textContent =
-          `Final model prediction: FAKE with ${confidence}% confidence.`;
-  
+        details[0].textContent = "The model detected patterns that may indicate synthetic or AI-generated speech.";
+        details[1].textContent = "Audio characteristics were analyzed for possible artifacts associated with voice synthesis or manipulation.";
+        details[2].textContent = `Final model prediction: FAKE with ${confidence}% confidence.`;
       }
-  
     }
-  
   </script>
 </body>
 </html>
